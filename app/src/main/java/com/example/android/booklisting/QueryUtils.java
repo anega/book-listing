@@ -144,18 +144,18 @@ public final class QueryUtils {
                 // Get book authors
                 StringBuilder authorStringBuilder = new StringBuilder();
                 for (int j = 0; j < bookAuthors.length(); j++) {
-                    JSONObject row = bookAuthors.getJSONObject(j);
+                    String row = bookAuthors.getString(j);
                     authorStringBuilder.append(row).append(", ");
                 }
                 String bookAuthorsString = authorStringBuilder.toString();
                 // Get book cover image url
-                JSONObject bookCoverUrlList = bookItem.getJSONObject("imageLinks");
+                JSONObject bookCoverUrlList = volInfo.getJSONObject("imageLinks");
                 String bookCoverUrlThumb = bookCoverUrlList.getString("thumbnail");
                 // Get url to a book page
                 String bookPageUrl = bookItem.getString("selfLink");
 
                 // Create a new {@link Book} object
-//                bookList.add(new Book(bookTitle, bookAuthorsString, bookCoverUrlThumb, bookPageUrl));
+                bookList.add(new Book(bookTitle, bookAuthorsString, R.drawable.book_cover, bookPageUrl));
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem parsing the JSON results.", e);
