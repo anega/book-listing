@@ -6,10 +6,10 @@ package com.example.android.booklisting;
 public class Book {
     private String mTitle;
     private String mAuthor;
-    private String mImgUrl;
+    private int mImgUrl;
     private String mBookUrl;
 
-    public Book(String title, String author, String imgUrl, String bookUrl) {
+    public Book(String title, String author, int imgUrl, String bookUrl) {
         mTitle = title;
         mAuthor = author;
         mImgUrl = imgUrl;
@@ -25,7 +25,7 @@ public class Book {
         return mAuthor;
     }
 
-    public String getImgUrl() {
+    public int getCoverImg() {
         return mImgUrl;
     }
 

@@ -155,7 +155,7 @@ public final class QueryUtils {
                 String bookPageUrl = bookItem.getString("selfLink");
 
                 // Create a new {@link Book} object
-                bookList.add(new Book(bookTitle, bookAuthorsString, bookCoverUrlThumb, bookPageUrl));
+//                bookList.add(new Book(bookTitle, bookAuthorsString, bookCoverUrlThumb, bookPageUrl));
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem parsing the JSON results.", e);
