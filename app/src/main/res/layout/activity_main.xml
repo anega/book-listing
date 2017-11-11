@@ -6,10 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/et_main_queryword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        tools:ignore="LabelFor,ObsoleteLayoutParam" />
+
     <ListView
         android:id="@+id/lv_main_bookslist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
         android:divider="@null"
         android:dividerHeight="0dp" />
 

@@ -9,8 +9,13 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,11 +29,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // Set the class log tag
     private static final String LOG_TAG = MainActivity.class.getName();
     // URL for book data from google
-    private static final String BOOK_URL = "https://www.googleapis.com/books/v1/volumes?q=android";
+    private static String BOOK_URL = "https://www.googleapis.com/books/v1/volumes?q=bonobo";
     // Constant value for the book loader ID
     private static final int BOOK_LOADER_ID = 0;
     // TextView that is displayed when the list is empty
     private TextView mEmptyStateTextView;
+    // Loading data ProgressBar
     private ProgressBar mIndeterminateBar;
 
     @Override
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Find a reference to the empty earthquakes view in the layout
         mEmptyStateTextView = findViewById(R.id.tv_empty_books);
         mIndeterminateBar = findViewById(R.id.indeterminateBar);
+        final EditText queryWord = findViewById(R.id.et_main_queryword);
 
         // Set the adapter on the {@link} ListView, so the list can be populated in the user interface
         bookListView.setAdapter(mAdapter);
@@ -74,9 +81,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // Update empty state with no connection error message
             mEmptyStateTextView.setText(R.string.no_intenet);
         }
-
         // Set empty view for no books response
         bookListView.setEmptyView(mEmptyStateTextView);
+
+        queryWord.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (keyEvent != null || i == EditorInfo.IME_ACTION_SEARCH) {
+                    BOOK_URL = "https://www.googleapis.com/books/v1/volumes?q=" + queryWord.getText().toString();
+                    getLoaderManager().restartLoader(BOOK_LOADER_ID, null, MainActivity.this);
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override

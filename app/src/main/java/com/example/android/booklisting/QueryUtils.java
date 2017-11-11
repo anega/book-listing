@@ -143,18 +143,24 @@ public final class QueryUtils {
                 JSONObject bookItem = bookItemsList.getJSONObject(i);
                 JSONObject volInfo = bookItem.getJSONObject("volumeInfo");
                 String bookTitle = volInfo.getString("title");
-                JSONArray bookAuthors = volInfo.getJSONArray("authors");
-                // Get book authors
-                StringBuilder authorStringBuilder = new StringBuilder();
-                for (int j = 0; j < bookAuthors.length(); j++) {
-                    String row = bookAuthors.getString(j);
-                    authorStringBuilder.append(row).append(", ");
+                String bookAuthorsString = "";
+                if (volInfo.has("authors")) {
+                    JSONArray bookAuthors = volInfo.getJSONArray("authors");
+                    // Get book authors
+                    StringBuilder authorStringBuilder = new StringBuilder();
+                    for (int j = 0; j < bookAuthors.length(); j++) {
+                        String row = bookAuthors.getString(j);
+                        authorStringBuilder.append(row).append(", ");
+                    }
+                    bookAuthorsString = authorStringBuilder.toString();
                 }
-                String bookAuthorsString = authorStringBuilder.toString();
                 // Get book cover image url
-                JSONObject bookCoverUrlList = volInfo.getJSONObject("imageLinks");
-                String bookCoverUrlThumb = bookCoverUrlList.getString("thumbnail");
-                Bitmap bookCoverImg = getBitmapFromURL(bookCoverUrlThumb);
+                Bitmap bookCoverImg = null;
+                if (volInfo.has("imageLinks")) {
+                    JSONObject bookCoverUrlList = volInfo.getJSONObject("imageLinks");
+                    String bookCoverUrlThumb = bookCoverUrlList.getString("thumbnail");
+                    bookCoverImg = getBitmapFromURL(bookCoverUrlThumb);
+                }
 
                 // Get url to a book page
                 String bookPageUrl = bookItem.getString("selfLink");
