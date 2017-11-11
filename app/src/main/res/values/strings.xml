@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Book Listing</string>
     <string name="todo">TODO</string>
+    <string name="no_data_available">No data available.</string>
+    <string name="no_intenet">No internet connection.</string>
 </resources>
