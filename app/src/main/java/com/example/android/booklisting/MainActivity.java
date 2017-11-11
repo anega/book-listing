@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(BOOK_LOADER_ID, null, this);
     }
 
     @Override

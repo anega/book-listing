@@ -1,5 +1,8 @@
 package com.example.android.booklisting;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -151,16 +154,32 @@ public final class QueryUtils {
                 // Get book cover image url
                 JSONObject bookCoverUrlList = volInfo.getJSONObject("imageLinks");
                 String bookCoverUrlThumb = bookCoverUrlList.getString("thumbnail");
+                Bitmap bookCoverImg = getBitmapFromURL(bookCoverUrlThumb);
+
                 // Get url to a book page
                 String bookPageUrl = bookItem.getString("selfLink");
 
                 // Create a new {@link Book} object
-                bookList.add(new Book(bookTitle, bookAuthorsString, R.drawable.book_cover, bookPageUrl));
+                bookList.add(new Book(bookTitle, bookAuthorsString, bookCoverImg, bookPageUrl));
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem parsing the JSON results.", e);
         }
 
         return bookList;
+    }
+
+    private static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            return BitmapFactory.decodeStream(input);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error with getting image bitmap.", e);
+            return null;
+        }
     }
 }

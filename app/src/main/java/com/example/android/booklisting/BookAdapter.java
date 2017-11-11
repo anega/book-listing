@@ -29,7 +29,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
         Book book = getItem(position);
 
         ImageView bookCover = listItemView.findViewById(R.id.iv_listitem_bookcover);
-        bookCover.setImageResource(R.drawable.book_cover);
+        bookCover.setImageBitmap((book.getCoverImg()));
 
         TextView bookTitle = listItemView.findViewById(R.id.tv_listitem_booktitle);
         bookTitle.setText(book.getTitle());
