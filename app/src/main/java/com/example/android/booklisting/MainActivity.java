@@ -87,6 +87,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 // If there is a network connection, fetch data
                 if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
                     if (keyEvent != null || i == EditorInfo.IME_ACTION_SEARCH) {
+                        // Hide keyboard when search starts
+                        View view = MainActivity.this.getCurrentFocus();
+                        if (view != null) {
+                            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                        }
                         // Hide description text when data fetching has been started
                         mEmptyStateTextView.setVisibility(View.GONE);
                         // Show progress bar when data fetching has been started
