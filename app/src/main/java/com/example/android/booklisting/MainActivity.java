@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
     // Adapter for the list of books
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String LOG_TAG = MainActivity.class.getName();
     // URL for book data from google
     private static String BOOK_URL = "https://www.googleapis.com/books/v1/volumes?q=bonobo";
+    // Init search query word param
+    private String mQueryWord = "";
     // Constant value for the book loader ID
     private static final int BOOK_LOADER_ID = 0;
     // TextView that is displayed when the list is empty
@@ -42,13 +46,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Find a reference to the {@link ListView} in the layout
         ListView bookListView = findViewById(R.id.lv_main_bookslist);
+        // Find a reference to the empty books view in the layout
+        mEmptyStateTextView = findViewById(R.id.tv_books_message);
+        // Find a reference to the progress bar
+        mIndeterminateBar = findViewById(R.id.pb_indeterminateBar);
+        // Find a reference to the EditText that holds the query to search data on
+        final EditText queryWord = findViewById(R.id.et_main_queryword);
 
         // Create a new adapter that takes an empty list of earthquakes as input
         mAdapter = new BookAdapter(this, new ArrayList<Book>());
-        // Find a reference to the empty earthquakes view in the layout
-        mEmptyStateTextView = findViewById(R.id.tv_empty_books);
-        mIndeterminateBar = findViewById(R.id.pb_indeterminateBar);
-        final EditText queryWord = findViewById(R.id.et_main_queryword);
+
+        // First hide loading indicator so error message will be wisible
+        mIndeterminateBar.setVisibility(View.GONE);
 
         // Set the adapter on the {@link} ListView, so the list can be populated in the user interface
         bookListView.setAdapter(mAdapter);
@@ -65,29 +74,33 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        // Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager connMngr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        // Get details on the currently active default data network
-        NetworkInfo networkInfo = connMngr.getActiveNetworkInfo();
-        // If there is a network connection, fetch data
-        if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
-            getLoaderManager().initLoader(BOOK_LOADER_ID, null, this);
-        } else {
-            // Otherwise display error
-            // First hide loading indicator so error message will be wisible
-            mIndeterminateBar.setVisibility(View.GONE);
-            // Update empty state with no connection error message
-            mEmptyStateTextView.setText(R.string.no_intenet);
-        }
         // Set empty view for no books response
         bookListView.setEmptyView(mEmptyStateTextView);
 
         queryWord.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (keyEvent != null || i == EditorInfo.IME_ACTION_SEARCH) {
-                    BOOK_URL = "https://www.googleapis.com/books/v1/volumes?q=" + queryWord.getText().toString();
-                    getLoaderManager().restartLoader(BOOK_LOADER_ID, null, MainActivity.this);
+                // Get a reference to the ConnectivityManager to check state of network connectivity
+                ConnectivityManager connMngr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                // Get details on the currently active default data network
+                NetworkInfo networkInfo = connMngr.getActiveNetworkInfo();
+                // If there is a network connection, fetch data
+                if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+                    if (keyEvent != null || i == EditorInfo.IME_ACTION_SEARCH) {
+                        // Hide description text when data fetching has been started
+                        mEmptyStateTextView.setVisibility(View.GONE);
+                        // Show progress bar when data fetching has been started
+                        mIndeterminateBar.setVisibility(View.VISIBLE);
+                        // Append query word to the API url
+                        BOOK_URL = "https://www.googleapis.com/books/v1/volumes?q=" + queryWord.getText().toString();
+                        getLoaderManager().restartLoader(BOOK_LOADER_ID, null, MainActivity.this);
+                    }
+                } else {
+                    // Otherwise display error
+                    // First hide loading indicator so error message will be wisible
+                    mIndeterminateBar.setVisibility(View.GONE);
+                    // Update empty state with no connection error message
+                    mEmptyStateTextView.setText(R.string.no_intenet);
                 }
 
                 return true;

@@ -26,10 +26,14 @@
         android:dividerHeight="0dp" />
 
     <TextView
-        android:id="@+id/tv_empty_books"
+        android:id="@+id/tv_books_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginEnd="@dimen/size_listitem_marginhorizontal_16"
+        android:layout_marginStart="@dimen/size_listitem_marginhorizontal_16"
+        android:text="@string/init_message"
+        android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <ProgressBar
