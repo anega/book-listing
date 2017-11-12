@@ -10,6 +10,8 @@
         android:id="@+id/et_main_queryword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/size_listitem_marginhorizontal_16"
+        android:layout_marginStart="@dimen/size_listitem_marginhorizontal_16"
         android:imeOptions="actionSearch"
         android:inputType="text"
         tools:ignore="LabelFor,ObsoleteLayoutParam" />
@@ -18,7 +20,8 @@
         android:id="@+id/lv_main_bookslist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
+        android:layout_below="@id/et_main_queryword"
+        android:layout_marginTop="@dimen/size_listitem_marginvertical_8"
         android:divider="@null"
         android:dividerHeight="0dp" />
 
@@ -30,7 +33,7 @@
         android:textAppearance="?android:textAppearanceMedium" />
 
     <ProgressBar
-        android:id="@+id/indeterminateBar"
+        android:id="@+id/pb_indeterminateBar"
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

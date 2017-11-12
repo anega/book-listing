@@ -2,40 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/height_listitem_bookimage_72"
     android:orientation="horizontal"
-    android:paddingBottom="4dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="4dp">
+    android:paddingBottom="@dimen/size_listitem_paddingvertical_4"
+    android:paddingLeft="@dimen/size_listitem_paddinghorizontal_16"
+    android:paddingRight="@dimen/size_listitem_paddinghorizontal_16"
+    android:paddingTop="@dimen/size_listitem_paddingvertical_4">
 
     <ImageView
         android:id="@+id/iv_listitem_bookcover"
-        android:layout_width="48dp"
-        android:layout_height="72dp"
+        android:layout_width="@dimen/width_listitem_bookimage_40"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/todo"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        tools:ignore="RtlSymmetry"
+        tools:src="@drawable/book_cover" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/size_listitem_marginhorizontal_16"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="RtlSymmetry">
 
         <TextView
             android:id="@+id/tv_listitem_booktitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp" />
+            android:textSize="16sp"
+            tools:text="Test Book Title" />
 
         <TextView
             android:id="@+id/tv_listitem_bookauthor"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
+            android:textSize="14sp"
+            tools:text="Test Book Author" />
     </LinearLayout>
 
 </LinearLayout>

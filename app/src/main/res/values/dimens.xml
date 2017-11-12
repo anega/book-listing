@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_listitem_paddingvertical_4">4dp</dimen>
+    <dimen name="size_listitem_paddinghorizontal_8">8dp</dimen>
+    <dimen name="size_listitem_marginhorizontal_8">8dp</dimen>
+    <dimen name="size_listitem_marginvertical_8">8dp</dimen>
+    <dimen name="width_listitem_bookimage_40">40dp</dimen>
+    <dimen name="height_listitem_bookimage_72">72dp</dimen>
+    <dimen name="size_listitem_paddinghorizontal_16">16dp</dimen>
+    <dimen name="size_listitem_marginhorizontal_16">16dp</dimen>
+</resources>

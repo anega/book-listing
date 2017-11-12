@@ -9,12 +9,10 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter = new BookAdapter(this, new ArrayList<Book>());
         // Find a reference to the empty earthquakes view in the layout
         mEmptyStateTextView = findViewById(R.id.tv_empty_books);
-        mIndeterminateBar = findViewById(R.id.indeterminateBar);
+        mIndeterminateBar = findViewById(R.id.pb_indeterminateBar);
         final EditText queryWord = findViewById(R.id.et_main_queryword);
 
         // Set the adapter on the {@link} ListView, so the list can be populated in the user interface
