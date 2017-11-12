@@ -25,6 +25,7 @@ import java.util.List;
  * Helper methods related to requesting and receiving data from API.
  */
 public final class QueryUtils {
+    // Log tag
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     /**
@@ -32,8 +33,15 @@ public final class QueryUtils {
      * This class is only meant to hold static variables and methods, which can be accessed
      * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
      */
-    private QueryUtils() {}
+    private QueryUtils() {
+    }
 
+    /**
+     * Fetches book list data
+     *
+     * @param requestUrl String url to make request to
+     * @return List<Book> list of fetched books
+     */
     public static List<Book> fetchBookData(String requestUrl) {
         URL url = createUrl(requestUrl);
 
@@ -66,7 +74,15 @@ public final class QueryUtils {
         return url;
     }
 
+    /**
+     * Send the request for data
+     *
+     * @param url String url from where data will be fetched
+     * @return response from server
+     * @throws IOException
+     */
     private static String makeHttpRequest(URL url) throws IOException {
+        // Init response with empty string
         String jsonResponse = "";
 
         // If the url is null, then return early
@@ -74,6 +90,7 @@ public final class QueryUtils {
             return jsonResponse;
         }
 
+        // Create vars to hold connection and inputStream
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
 
@@ -108,6 +125,13 @@ public final class QueryUtils {
         return jsonResponse;
     }
 
+    /**
+     * Method to read data from stream
+     *
+     * @param inputStream
+     * @return inputStream converted to a string
+     * @throws IOException
+     */
     private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
 
@@ -124,6 +148,12 @@ public final class QueryUtils {
         return output.toString();
     }
 
+    /**
+     * Parse json response. Get required fields.
+     *
+     * @param jsonResponse
+     * @return List<Book>
+     */
     private static List<Book> extractFeatureFromJson(String jsonResponse) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(jsonResponse)) {
@@ -175,6 +205,12 @@ public final class QueryUtils {
         return bookList;
     }
 
+    /**
+     * Create drawable bitmap from url
+     *
+     * @param src String for the drawable
+     * @return Bitmap of the drawable
+     */
     private static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
