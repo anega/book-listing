@@ -1,16 +1,15 @@
 package com.example.android.booklisting;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 
 /**
  * Book item class
  */
 public class Book {
-    private String mTitle;
-    private String mAuthor;
-    private Bitmap mImgUrl;
-    private String mBookUrl;
+    private final String mTitle;
+    private final String mAuthor;
+    private final Bitmap mCoverImg;
+    private final String mBookUrl;
 
     /**
      * Book item constructor
@@ -23,7 +22,7 @@ public class Book {
     public Book(String title, String author, Bitmap coverImg, String bookUrl) {
         mTitle = title;
         mAuthor = author;
-        mImgUrl = coverImg;
+        mCoverImg = coverImg;
         mBookUrl = bookUrl;
     }
 
@@ -51,7 +50,7 @@ public class Book {
      * @return Bitmap image
      */
     public Bitmap getCoverImg() {
-        return mImgUrl;
+        return mCoverImg;
     }
 
     /**

@@ -2,7 +2,7 @@
     <string name="app_name">Book Listing</string>
     <string name="todo">TODO</string>
     <string name="no_data_available">No data available.</string>
-    <string name="no_intenet">No internet connection.</string>
+    <string name="no_internet">No internet connection.</string>
     <string name="search">Search</string>
     <string name="init_message">Please fill the search box with a query you want to search for.</string>
 </resources>

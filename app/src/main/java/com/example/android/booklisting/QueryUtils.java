@@ -1,8 +1,14 @@
 package com.example.android.booklisting;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -37,11 +43,26 @@ public final class QueryUtils {
     }
 
     /**
+     * Check if network available
+     *
+     * @param mContext
+     * @return boolean
+     */
+    public static boolean isNetworkAvailable(Context mContext) {
+        // Get a reference to the ConnectivityManager to check state of network connectivity
+        ConnectivityManager connMngr = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        // Get details on the currently active default data network
+        NetworkInfo networkInfo = connMngr.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+    }
+
+    /**
      * Fetches book list data
      *
      * @param requestUrl String url to make request to
      * @return List<Book> list of fetched books
      */
+    @WorkerThread
     public static List<Book> fetchBookData(String requestUrl) {
         URL url = createUrl(requestUrl);
 
@@ -81,6 +102,7 @@ public final class QueryUtils {
      * @return response from server
      * @throws IOException
      */
+    @WorkerThread
     private static String makeHttpRequest(URL url) throws IOException {
         // Init response with empty string
         String jsonResponse = "";
@@ -132,6 +154,8 @@ public final class QueryUtils {
      * @return inputStream converted to a string
      * @throws IOException
      */
+    @NonNull
+    @WorkerThread
     private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
 
@@ -154,6 +178,7 @@ public final class QueryUtils {
      * @param jsonResponse
      * @return List<Book>
      */
+    @Nullable
     private static List<Book> extractFeatureFromJson(String jsonResponse) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(jsonResponse)) {
@@ -211,6 +236,8 @@ public final class QueryUtils {
      * @param src String for the drawable
      * @return Bitmap of the drawable
      */
+    @Nullable
+    @WorkerThread
     private static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
